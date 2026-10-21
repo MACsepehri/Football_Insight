@@ -4,7 +4,7 @@ from api.v1 import model,dataset
 m = model()
 m.fit()
 d = dataset()
-# d.update()
+d.update()
 teams = d.show_teams()
 
 app = Flask(__name__)

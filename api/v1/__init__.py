@@ -9,7 +9,7 @@ from sklearn.linear_model import LinearRegression
 
 class dataset:
     def __init__(self):
-        self.dataset_path = 'api/v1/data/index.csv'
+        self.dataset_path = 'data/index.csv'
         self.base_url = 'https://api.football-data.org/v4'
 
         dotenv.load_dotenv('../../.env')
@@ -55,16 +55,13 @@ class dataset:
         return None
 
     def show_teams(self):
-        if not os.path.isfile(self.dataset_path):
-            print('Dataset does not exist.')
-            return False
 
         try:
             data = pandas.read_csv(self.dataset_path, sep=';')
 
             if data.empty:
                 print('Dataset is empty.')
-                return False
+                return True
 
             teams = data['team'].dropna().unique()
 
@@ -72,7 +69,7 @@ class dataset:
 
         except (pandas.errors.EmptyDataError, pandas.errors.ParserError, OSError, KeyError) as error:
             print(f'Failed to load teams: {error}')
-            return False
+            return 't'
 
     def get(self, team):
         if not os.path.isfile(self.dataset_path):
@@ -304,7 +301,7 @@ class dataset:
 class model:
     def __init__(self):
         self.lr = LinearRegression() ### creating linear regression model
-        self.dataset_path = 'api/v1/data/index.csv' ### dataset path
+        self.dataset_path = 'data/index.csv' ### dataset path
         self.window = None ### matches used for the form (None = all matches)
         self.is_fitted = False
         self.teams = {}
