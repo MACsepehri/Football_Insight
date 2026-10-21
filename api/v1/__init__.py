@@ -67,14 +67,33 @@ class dataset:
 
             teams = data['team'].dropna().unique()
 
-            for index, team in enumerate(teams, start=1):
-                print(f'{index}. {team}')
-
-            print(f'\nTotal teams: {len(teams)}')
-            return True
+            return teams
 
         except (pandas.errors.EmptyDataError, pandas.errors.ParserError, OSError, KeyError) as error:
             print(f'Failed to load teams: {error}')
+            return False
+
+    def get(self, team):
+        if not os.path.isfile(self.dataset_path):
+            print('Dataset does not exist.')
+            return False
+
+        try:
+            data = pandas.read_csv(self.dataset_path, sep=';')
+
+            if data.empty:
+                print('Dataset is empty.')
+                return False
+
+            info = data[data['team'] == team]
+
+            if info.empty:
+                print(f'No data found for {team}.')
+                return False
+
+            return info
+        except (pandas.errors.EmptyDataError, pandas.errors.ParserError, OSError, KeyError) as error:
+            print(f'Failed to get team: {error}')
             return False
 
     def update(self):
