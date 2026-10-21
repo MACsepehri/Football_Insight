@@ -1,0 +1,19 @@
+select,option {
+    background: var(--card);
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--gcolor);
+}
+
+select:focus,option:focus {
+    outline: none;
+}
+
+button {
+    width: 150px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--gcolor);
+    background: var(--card);
+    cursor: pointer;
+}

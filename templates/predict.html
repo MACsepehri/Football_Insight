@@ -1,0 +1,54 @@
+{% extends "tmp/base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/css/prediction.css">
+{% endblock %}
+
+{% block body %}
+    <section style="margin-top: -100px;">
+
+        {% if not predicted %}
+            <h2 class="title"><span class="g">رایگان</span> و <span class="g">سریع</span> پیشبینی کن!</h2>
+            <div>
+                <form action="/predict/complete" method="post">
+                    <div>
+                        <label for="team-1">تیم اول :</label>
+
+                        <select id="team-1" name="team-1">
+                            {% for team in teams %}
+                                <option value="{{ team }}">{{ team }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="team-2">تیم دوم :</label>
+
+                        <select id="team-2" name="team-2">
+                            {% for team in teams %}
+                                <option value="{{ team }}">{{ team }}</option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
+                    <button>پیشبینی</button>
+                </form>
+            </div>
+        {% else %}
+            <div>
+                <h2 class="title">نتیجه پیشبینی</h2>
+                <div>
+                    <span style="display: flex; gap: 50px; justify-content: center;">
+                        <span dir="ltr">
+                            <span class="g">{{ res['home_goals'] }}</span>
+                            <span>{{ res['home'] }}</span>
+                        </span>
+                        <span dir="rtl">
+                            <span class="g">{{ res['away_goals'] }}</span>
+                            <span>{{ res['away'] }}</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
